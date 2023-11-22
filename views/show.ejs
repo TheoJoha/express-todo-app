@@ -1,0 +1,15 @@
+<%- include("partials/head.ejs") %>
+
+<%- include("partials/header.ejs") %>
+
+<main>
+   <h1><%= todo.message %></h1>
+   <h2><%= todo.completed ? "completed" : "not completed" %></h2>
+   <form action="/todos/complete/<%= todo._id %>? method=PUT" method="post">
+    <input type="submit value=mark completed" />
+   </form>
+   <a href="/" ><button>Back</button></a>
+
+
+
+</main>

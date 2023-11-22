@@ -72,6 +72,11 @@ APIRoutes.use(cors())
 // routes that render pages with EJS
 ///////////////////////////////////
 MainRoutes.get("/", mainController.index)
+MainRoutes.get("/", mainController.new)
+MainRoutes.post("/todo", mainController.create)
+MainRoutes.get("/todo/:id", mainController.show)
+MainRoutes.put("/todo/complete/:id", mainController.complete)
+
 
 /////////////////////////////////////
 // API routes that return JSON

@@ -6,14 +6,59 @@ class MainController {
         })
     }
 
-    index(req, res){
+    index(req, res) {
         const Todo = req.models.Todo
         Todo.find({}, (err, todos) => {
             if (err) {
                 res.status(400).send(err)
             }
             else {
-                res.render("index.ejs", {todos})
+                res.render("index.ejs", { todos })
+            }
+        })
+    }
+
+    new(req, res) {
+        res.render("new.ejs")
+    }
+
+    create(req, res) {
+        const Todo = req.models.Todo
+        req.body.completed = false
+        Todo.create(req.body, (err, todo) => {
+            if (err) {
+                res.status(400).send(err)
+            }
+            else {
+                res.render("create.ejs", { todos })
+            }
+        })
+
+
+    }
+
+    Show(req, res) {
+        const id = req.params.id
+        const Todo = req.models.Todo
+        Todo.findById(id, (err, todo) => {
+            if (err) {
+                res.status(400).send(err)
+            }
+            else {
+                res.render("show.ejs", { todos })
+            }
+        })
+    }
+
+    complete(req, res) {
+        const id = req.params.id
+        const Todo = req.models.Todo
+        Todo.findByIdAndUpdate(id, { completed: true }, { new: true }, (err, Todo) => {
+            if (err) {
+                res.status(400).send(err)
+            }
+            else {
+                res.redirect("/")
             }
         })
     }
