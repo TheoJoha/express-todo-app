@@ -6,7 +6,10 @@
    <h1><%= todo.message %></h1>
    <h2><%= todo.completed ? "completed" : "not completed" %></h2>
    <form action="/todos/complete/<%= todo._id %>? method=PUT" method="post">
-    <input type="submit value=mark completed" />
+    <input type="submit" value="mark completed" />
+   </form>
+   <form action="/todo/complete/<%= todo._id %>? method=DELETE" method="post">
+    <input type="submit" value="delete todo" />
    </form>
    <a href="/" ><button>Back</button></a>
 

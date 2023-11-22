@@ -63,6 +63,19 @@ class MainController {
         })
     }
 
+    destroy(req, res) {
+        const id = req.params.id
+        const Todo = req.models.Todo
+        Todo.findByIdAndDelete(id, { completed: true }, { new: true }, (err, Todo) => {
+            if (err) {
+                res.status(400).send(err)
+            }
+            else {
+                res.redirect("/")
+            }
+        })
+    }
+
 }
 
 export default MainController

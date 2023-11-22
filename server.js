@@ -76,6 +76,7 @@ MainRoutes.get("/", mainController.new)
 MainRoutes.post("/todo", mainController.create)
 MainRoutes.get("/todo/:id", mainController.show)
 MainRoutes.put("/todo/complete/:id", mainController.complete)
+MainRoutes.delete("/todo/:id", mainController.destroy)
 
 
 /////////////////////////////////////
