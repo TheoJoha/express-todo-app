@@ -71,8 +71,7 @@ APIRoutes.use(cors())
 //////////////////////////////
 // routes that render pages with EJS
 ///////////////////////////////////
-
-MainRoutes.get("/", mainController.example)
+MainRoutes.get("/", mainController.index)
 
 /////////////////////////////////////
 // API routes that return JSON
