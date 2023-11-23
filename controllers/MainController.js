@@ -1,79 +1,68 @@
 class MainController {
 
-    example(req, res) {
+    async example(req, res) {
         res.render("example.ejs", {
             text: "This is an example API Route"
         })
     }
 
-    index(req, res) {
+    async index(req, res) {
         const Todo = req.models.Todo
-        Todo.find({}, (err, todos) => {
-            if (err) {
-                res.status(400).send(err)
-            }
-            else {
-                res.render("index.ejs", { todos })
-            }
-        })
+
+        try {
+            const todos = await Todo.find({})
+            res.render("index.ejs", { todos })
+        } catch (err) {
+            res.status(400).send(err)
+        }
     }
 
-    new(req, res) {
+    async new(req, res) {
         res.render("new.ejs")
     }
 
-    create(req, res) {
+    async create(req, res) {
         const Todo = req.models.Todo
         req.body.completed = false
-        Todo.create(req.body, (err, todo) => {
-            if (err) {
-                res.status(400).send(err)
-            }
-            else {
-                res.render("create.ejs", { todos })
-            }
-        })
-
-
+        try {
+            const todo = await Todo.create(req.body)
+            res.redirect("/")
+        } catch (err) {
+            res.status(400).send(err)
+        }
     }
 
-    Show(req, res) {
+    async show(req, res) {
         const id = req.params.id
         const Todo = req.models.Todo
-        Todo.findById(id, (err, todo) => {
-            if (err) {
-                res.status(400).send(err)
-            }
-            else {
-                res.render("show.ejs", { todos })
-            }
-        })
+        try {
+            const todo = await Todo.findById(id)
+            res.render("show.ejs", { todos })
+        } catch (err) {
+            res.status(400).send(err)
+        }
     }
 
-    complete(req, res) {
+    async complete(req, res) {
         const id = req.params.id
         const Todo = req.models.Todo
-        Todo.findByIdAndUpdate(id, { completed: true }, { new: true }, (err, Todo) => {
-            if (err) {
-                res.status(400).send(err)
-            }
-            else {
-                res.redirect("/")
-            }
-        })
+        try {
+            const todo = await Todo.findByIdAndUpdate(id, { completed: true }, { new: true })
+            res.redirect("/")
+        } catch (err) {
+            res.status(400).send(err)
+        }
     }
 
-    destroy(req, res) {
+    async destroy(req, res) {
         const id = req.params.id
         const Todo = req.models.Todo
-        Todo.findByIdAndDelete(id, { completed: true }, { new: true }, (err, Todo) => {
-            if (err) {
-                res.status(400).send(err)
-            }
-            else {
-                res.redirect("/")
-            }
-        })
+        try {
+            const todo = await Todo.findByIdAndDelete(id, { completed: true }, { new: true })
+        } catch (err) {
+            console.log(err)
+        }
+
     }
 
 }

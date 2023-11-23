@@ -1,5 +1,5 @@
 // Enabling env variables
-import dotenv from 'dotenv/config'
+import dotenv from 'dotenv'
 dotenv.config()
 
 /////////////////////
@@ -9,7 +9,8 @@ import express from "express"
 import methodOverride from "method-override"
 import cors from "cors"
 import morgan from "morgan"
-import MainController from "controllers/MainController.js"
+import MainController from "./controllers/MainController.js"
+import APIController from "./controllers/APIController.js"
 import mongoose from "mongoose"
 
 // global variables and instantiation
@@ -31,7 +32,7 @@ mongoose.connection
 //////////////////
 // Todo model object
 /////////////////////////////
-const TodoSchema = mongoose.Schema({
+const TodoSchema = new mongoose.Schema({
     message: String,
     completed: Boolean
 })
@@ -72,7 +73,7 @@ APIRoutes.use(cors())
 // routes that render pages with EJS
 ///////////////////////////////////
 MainRoutes.get("/", mainController.index)
-MainRoutes.get("/", mainController.new)
+MainRoutes.get("/todo/new", mainController.new)
 MainRoutes.post("/todo", mainController.create)
 MainRoutes.get("/todo/:id", mainController.show)
 MainRoutes.put("/todo/complete/:id", mainController.complete)
@@ -83,6 +84,7 @@ MainRoutes.delete("/todo/:id", mainController.destroy)
 // API routes that return JSON
 ///////////////////////////////////
 APIRoutes.get("/", apiController.example)
+APIRoutes.get("/todos", apiController.getTodos)
 
 ///////////////////////////////////
 // server listeners
