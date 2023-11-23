@@ -36,8 +36,11 @@ class MainController {
         const id = req.params.id
         const Todo = req.models.Todo
         try {
-            const todo = await Todo.findById(id)
-            res.render("show.ejs", { todos })
+            const todo = await Todo.findById(id).then(function (todo) {
+                console.log(todo)
+                res.render("show.ejs", { todo })
+        });
+            // res.render("show.ejs", { todos })
         } catch (err) {
             res.status(400).send(err)
         }
@@ -58,7 +61,8 @@ class MainController {
         const id = req.params.id
         const Todo = req.models.Todo
         try {
-            const todo = await Todo.findByIdAndDelete(id, { completed: true }, { new: true })
+            const todo = await Todo.findByIdAndDelete(id)
+            res.redirect("/")
         } catch (err) {
             console.log(err)
         }
